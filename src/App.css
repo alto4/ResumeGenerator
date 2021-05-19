@@ -6,6 +6,7 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #ded;
 }
 
 header {
@@ -20,4 +21,74 @@ header {
   border: 2px solid #222;
   border-radius: 10px;
   padding: 25px;
+  position: relative;
+  background: #fff;
+}
+
+.resume-container h1 {
+  text-align: center;
+  margin: 10px auto 30px;
+}
+
+.resume-container h2 {
+  text-transform: uppercase;
+  font-size: 1.3rem;
+}
+
+.contact-details,
+.education-section {
+  border-bottom: 1px solid #111;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  padding: 7px 20px;
+  margin: 1rem 0;
+  border: 1px solid #000;
+  background: #ded;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background: #cdc;
+}
+.social-links {
+  position: absolute;
+  top: 25px;
+  right: 40px;
+  width: 20%;
+}
+
+.social-links input {
+  font-size: .8rem;
+  width: 80%;
+}
+.social-links i {
+  width: 15px;
+  margin-right: 10px;
+}
+
+.contact-details {
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between;
+}
+
+input {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+.name-input {
+  font-size: 50px;
+  font-weight: 600;
+  margin: 1rem auto;
+  text-align: center;
+}
+.location-inputs {
+  display: flex;
 }
