@@ -16,6 +16,8 @@ class Resume extends React.Component {
       githubURL: '',
       linkedinURL: '',
       portfolioURL: '',
+      education: [],
+      experience: [],
     };
   }
 
@@ -30,11 +32,17 @@ class Resume extends React.Component {
     }));
   };
 
+  addEntry = (entry, section) => {
+    this.setState({
+      [section]: [...this.state[section], entry],
+    });
+  };
+
   render() {
     return (
       <div className="resume-container">
         <ResumeHeader onChange={this.onChange} />
-        <EducationSection />
+        <EducationSection addEducation={this.addEntry} />
         <ExperienceSection />
       </div>
     );

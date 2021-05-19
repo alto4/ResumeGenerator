@@ -1,23 +1,47 @@
+import { render } from '@testing-library/react';
 import React from 'react';
 
-function EducationSection() {
-  let showForm = false;
+class EducationSection extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const toggleFormDisplay = (e) => {
+    this.state = {
+      showForm: false,
+    };
+  }
+
+  toggleFormDisplay = (e) => {
     e.preventDefault();
-    showForm = !showForm;
+    this.setState({ showForm: !this.state.showForm });
+    console.log('clicked');
   };
 
-  return (
-    <div className="education-section">
-      <h2>Education</h2>
-      <button className="btn btn-add" onClickCapture={toggleFormDisplay}>
-        Add Experience
-      </button>
+  addNewEntry = (e) => {
+    this.props.addEducation(
+      { title: 'Grad School', school: 'Laurier' },
+      'education'
+    );
+  };
 
-      {showForm && <form>FORM</form>}
-    </div>
-  );
+  render() {
+    return (
+      <div className="education-section">
+        <h2>Education</h2>
+        <button className="btn btn-add" onClick={this.toggleFormDisplay}>
+          Add New Experience
+        </button>
+
+        {this.state.showForm && (
+          <form>
+            <h4>Add New Education Entry</h4>
+            <button className="btn btn-add" onClick={this.addNewEntry}>
+              Add Experience
+            </button>
+          </form>
+        )}
+      </div>
+    );
+  }
 }
 
 export default EducationSection;
