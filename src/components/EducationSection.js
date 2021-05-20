@@ -17,9 +17,29 @@ class EducationSection extends React.Component {
   };
 
   addNewEntry = (e) => {
+    e.preventDefault();
     this.props.addEducation(
-      { title: 'Grad School', school: 'Laurier' },
+      {
+        credential: 'Bachelor of Music',
+        program: 'Comprehensive, Classical Guitar',
+        school: 'Wilfrid Laurier University',
+        date: '2011-2015',
+        description: [
+          'Teamwork skills',
+          'Critical analysis skills',
+          'Problem-solving skills',
+        ],
+      },
       'education'
+    );
+
+    this.setState({ showForm: !this.state.showForm });
+  };
+
+  removeEntry = (e) => {
+    e.preventDefault();
+    console.log(
+      'Clicked to remove with index of ' + e.target.getAttribute('data-id')
     );
   };
 
@@ -39,6 +59,38 @@ class EducationSection extends React.Component {
             </button>
           </form>
         )}
+
+        <div className="education-details-container">
+          <article>
+            {this.props.entries.map((entry, index) => {
+              return (
+                <div className="education-entry">
+                  <h3>
+                    {entry.credential} - {entry.program}{' '}
+                    <span>{entry.date}</span>
+                  </h3>
+                  <button
+                    className="btn btn-delete"
+                    data-id={index}
+                    onClick={this.removeEntry}
+                  >
+                    X
+                  </button>
+                  <p>
+                    <strong>{entry.school}</strong>
+                  </p>
+
+                  <ul>
+                    {entry.description.map((detail) => {
+                      return <li>{detail}</li>;
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
+            <h3>Test</h3>
+          </article>
+        </div>
       </div>
     );
   }

@@ -42,7 +42,10 @@ class Resume extends React.Component {
     return (
       <div className="resume-container">
         <ResumeHeader onChange={this.onChange} />
-        <EducationSection addEducation={this.addEntry} />
+        <EducationSection
+          addEducation={this.addEntry}
+          entries={this.state.education}
+        />
         <ExperienceSection />
       </div>
     );
