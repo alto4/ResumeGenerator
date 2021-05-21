@@ -107,15 +107,18 @@ class EducationSection extends React.Component {
                   <div className="education-entry-header">
                     <h3>
                       {entry.credential} - {entry.program}{' '}
-                      <span>{entry.date}</span>
                     </h3>
-                    <button
-                      className="btn btn-delete"
-                      data-id={index}
-                      onClick={this.removeEntry}
-                    >
-                      X
-                    </button>
+
+                    <div>
+                      <span>{entry.date} </span>
+                      <button
+                        className="btn btn-delete"
+                        data-id={index}
+                        onClick={this.removeEntry}
+                      >
+                        X
+                      </button>
+                    </div>
                   </div>
                   <p>
                     <strong>{entry.school}</strong>
