@@ -124,3 +124,13 @@ form .btn-cancel {
   padding: 8px 15px;
   margin-right: 10px;
 }
+
+.education-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.education-entry-header button {
+  margin: 0;
+}

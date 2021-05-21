@@ -18,13 +18,22 @@ class EducationSection extends React.Component {
 
   addNewEntry = (e) => {
     e.preventDefault();
+
+    let credential = this.state.credential;
+    let program = this.state.program;
+    let school = this.state.school;
+    let date = this.state.date;
+    let description = this.state.description;
+
+    alert('description value is ' + description);
     this.props.addEducation(
       {
-        credential: 'Bachelor of Music',
-        program: 'Comprehensive, Classical Guitar',
-        school: 'Wilfrid Laurier University',
-        date: '2011-2015',
+        credential,
+        program,
+        school,
+        date,
         description: [
+          description,
           'Teamwork skills',
           'Critical analysis skills',
           'Problem-solving skills',
@@ -43,6 +52,17 @@ class EducationSection extends React.Component {
     );
   };
 
+  onChange = (e) => {
+    let target = e.target.name;
+    let value = e.target.value;
+
+    console.log(`Changing handling here! target ${target}: ${value}`);
+
+    this.setState((state, props) => ({
+      [e.target.name]: value,
+    }));
+  };
+
   render() {
     return (
       <div className="education-section">
@@ -54,23 +74,21 @@ class EducationSection extends React.Component {
         {this.state.showForm && (
           <form>
             <h4>Add New Education Entry</h4>
-            {/* 
-            credential: 'Bachelor of Music',
-        program: 'Comprehensive, Classical Guitar',
-        school: 'Wilfrid Laurier University',
-        date: '2011-2015',
-        description: [ */}
+
             <label htmlFor="credential">Credential:</label>
-            <input type="text" name="credential" />
+            <input type="text" name="credential" onChange={this.onChange} />
+
+            <label htmlFor="program">Program:</label>
+            <input type="text" name="program" onChange={this.onChange} />
 
             <label htmlFor="school">School:</label>
-            <input type="text" name="school" />
+            <input type="text" name="school" onChange={this.onChange} />
 
             <label htmlFor="date">Date:</label>
-            <input type="text" name="date" />
+            <input type="text" name="date" onChange={this.onChange} />
 
             <label htmlFor="description">Description:</label>
-            <input type="text" name="description" />
+            <input type="text" name="description" onChange={this.onChange} />
 
             <div className="add-form-buttons">
               <button className="btn btn-add" onClick={this.addNewEntry}>
@@ -86,17 +104,19 @@ class EducationSection extends React.Component {
             {this.props.entries.map((entry, index) => {
               return (
                 <div className="education-entry">
-                  <h3>
-                    {entry.credential} - {entry.program}{' '}
-                    <span>{entry.date}</span>
-                  </h3>
-                  <button
-                    className="btn btn-delete"
-                    data-id={index}
-                    onClick={this.removeEntry}
-                  >
-                    X
-                  </button>
+                  <div className="education-entry-header">
+                    <h3>
+                      {entry.credential} - {entry.program}{' '}
+                      <span>{entry.date}</span>
+                    </h3>
+                    <button
+                      className="btn btn-delete"
+                      data-id={index}
+                      onClick={this.removeEntry}
+                    >
+                      X
+                    </button>
+                  </div>
                   <p>
                     <strong>{entry.school}</strong>
                   </p>
@@ -109,7 +129,6 @@ class EducationSection extends React.Component {
                 </div>
               );
             })}
-            <h3>Test</h3>
           </article>
         </div>
       </div>
