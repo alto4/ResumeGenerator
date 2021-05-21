@@ -46,7 +46,10 @@ class Resume extends React.Component {
           addEducation={this.addEntry}
           entries={this.state.education}
         />
-        <ExperienceSection />
+        <ExperienceSection
+          addExperience={this.addEntry}
+          entries={this.state.experience}
+        />
       </div>
     );
   }

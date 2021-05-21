@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 
 class EducationSection extends React.Component {
@@ -13,7 +12,6 @@ class EducationSection extends React.Component {
   toggleFormDisplay = (e) => {
     e.preventDefault();
     this.setState({ showForm: !this.state.showForm });
-    console.log('clicked');
   };
 
   addNewEntry = (e) => {
@@ -68,7 +66,7 @@ class EducationSection extends React.Component {
       <div className="education-section">
         <h2>Education</h2>
         <button className="btn btn-add" onClick={this.toggleFormDisplay}>
-          Add New Experience
+          Add New Education
         </button>
 
         {this.state.showForm && (
