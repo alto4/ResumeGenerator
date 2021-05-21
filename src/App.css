@@ -92,3 +92,35 @@ input {
 .location-inputs {
   display: flex;
 }
+
+/* Education Section Styles */
+.education-section {
+  padding: 1rem;
+}
+
+.education-section form {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.education-section form h4{
+  grid-column: span 2;
+  margin-bottom: 20px;
+}
+
+.education-section label {  padding: 3px 8px;
+  margin: 10px;
+  text-align: end;
+}
+
+.education-section input{
+  background-color: #ded;
+  padding: 3px 8px;
+  margin: 10px;
+}
+
+form .btn-add,
+form .btn-cancel {
+  padding: 8px 15px;
+  margin-right: 10px;
+}

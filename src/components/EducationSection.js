@@ -54,9 +54,30 @@ class EducationSection extends React.Component {
         {this.state.showForm && (
           <form>
             <h4>Add New Education Entry</h4>
-            <button className="btn btn-add" onClick={this.addNewEntry}>
-              Add Experience
-            </button>
+            {/* 
+            credential: 'Bachelor of Music',
+        program: 'Comprehensive, Classical Guitar',
+        school: 'Wilfrid Laurier University',
+        date: '2011-2015',
+        description: [ */}
+            <label htmlFor="credential">Credential:</label>
+            <input type="text" name="credential" />
+
+            <label htmlFor="school">School:</label>
+            <input type="text" name="school" />
+
+            <label htmlFor="date">Date:</label>
+            <input type="text" name="date" />
+
+            <label htmlFor="description">Description:</label>
+            <input type="text" name="description" />
+
+            <div className="add-form-buttons">
+              <button className="btn btn-add" onClick={this.addNewEntry}>
+                Add
+              </button>
+              <button className="btn btn-cancel">Cancel</button>
+            </div>
           </form>
         )}
 
