@@ -2,6 +2,7 @@ import React from 'react';
 import ResumeHeader from './ResumeHeader';
 import EducationSection from './EducationSection';
 import ExperienceSection from './ExperienceSection';
+import PreviewButton from './PreviewButton';
 
 class Resume extends React.Component {
   constructor(props) {
@@ -60,6 +61,7 @@ class Resume extends React.Component {
   render() {
     return (
       <div className="resume-container">
+        <PreviewButton />
         <ResumeHeader onChange={this.onChange} />
         <EducationSection
           addEducation={this.addEntry}
@@ -69,6 +71,7 @@ class Resume extends React.Component {
         />
         <ExperienceSection
           addExperience={this.addEntry}
+          editExperience={this.editEntry}
           removeExperience={this.deleteEntry}
           entries={this.state.experience}
         />

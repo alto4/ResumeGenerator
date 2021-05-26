@@ -44,7 +44,6 @@ class EducationSection extends React.Component {
       entryEditing: e.target.getAttribute('data-id'),
     });
 
-    console.log(this.props.entries[e.target.getAttribute('data-id')]);
     let { credential, program, school, date, description } =
       this.props.entries[e.target.getAttribute('data-id')];
 
@@ -204,7 +203,7 @@ class EducationSection extends React.Component {
                 <div className="education-entry" key={index}>
                   <div className="education-entry-header">
                     <h3>
-                      {entry.credential} - {entry.program}{' '}
+                      {entry.credential} - {entry.program}
                     </h3>
 
                     <div>
