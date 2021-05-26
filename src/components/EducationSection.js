@@ -22,6 +22,7 @@ class EducationSection extends React.Component {
   };
 
   showAddForm = (e) => {
+    this.clearFormFields();
     e.preventDefault();
     if (this.state.showForm === false) {
       this.toggleFormDisplay();
@@ -77,6 +78,7 @@ class EducationSection extends React.Component {
 
     this.setState({ showAddForm: !this.state.showAddForm });
     this.toggleFormDisplay();
+    this.clearFormFields();
   };
 
   editEntry = (e) => {
@@ -89,12 +91,25 @@ class EducationSection extends React.Component {
       program: this.state.program,
       description: ['1', '2', '3'],
     });
+
+    this.toggleFormDisplay();
+    this.clearFormFields();
   };
 
   removeEntry = (e) => {
     e.preventDefault();
 
     this.props.removeEducation(e.target.getAttribute('data-id'), 'education');
+  };
+
+  clearFormFields = () => {
+    this.setState({
+      credential: '',
+      program: '',
+      school: '',
+      date: '',
+      description: '',
+    });
   };
 
   onChange = (e) => {
