@@ -49,6 +49,9 @@ header {
   background: #ded;
 }
 
+.btn-preview {
+  position: absolute;
+}
 .btn:hover {
   cursor: pointer;
   background: #cdc;
