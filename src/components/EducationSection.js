@@ -6,12 +6,48 @@ class EducationSection extends React.Component {
 
     this.state = {
       showForm: false,
+      showAddForm: false,
+      showEditForm: false,
+      entryEditing: null,
+      credential: '',
+      school: '',
+      date: '',
+      program: '',
+      description: [],
     };
   }
 
-  toggleFormDisplay = (e) => {
-    e.preventDefault();
+  toggleFormDisplay = () => {
     this.setState({ showForm: !this.state.showForm });
+  };
+
+  showAddForm = (e) => {
+    e.preventDefault();
+    if (this.state.showForm === false) {
+      this.toggleFormDisplay();
+    }
+
+    this.setState({ showAddForm: true, showEditForm: false });
+  };
+
+  showEditForm = (e) => {
+    e.preventDefault();
+
+    if (this.state.showForm === false) {
+      this.toggleFormDisplay();
+    }
+
+    this.setState({
+      showEditForm: true,
+      showAddForm: false,
+      entryEditing: e.target.getAttribute('data-id'),
+    });
+
+    console.log(this.props.entries[e.target.getAttribute('data-id')]);
+    let { credential, program, school, date, description } =
+      this.props.entries[e.target.getAttribute('data-id')];
+
+    this.setState({ credential, program, school, date, description });
   };
 
   addNewEntry = (e) => {
@@ -23,7 +59,6 @@ class EducationSection extends React.Component {
     let date = this.state.date;
     let description = this.state.description;
 
-    alert('description value is ' + description);
     this.props.addEducation(
       {
         credential,
@@ -40,14 +75,24 @@ class EducationSection extends React.Component {
       'education'
     );
 
-    this.setState({ showForm: !this.state.showForm });
+    this.setState({ showAddForm: !this.state.showAddForm });
+    this.toggleFormDisplay();
+  };
+
+  editEntry = (e) => {
+    e.preventDefault();
+
+    this.props.editEducation(this.state.entryEditing, 'education', {
+      credential: this.state.credential,
+      date: this.state.date,
+      school: this.state.school,
+      program: this.state.program,
+      description: ['1', '2', '3'],
+    });
   };
 
   removeEntry = (e) => {
     e.preventDefault();
-    console.log(
-      'Clicked to remove with index of ' + e.target.getAttribute('data-id')
-    );
 
     this.props.removeEducation(e.target.getAttribute('data-id'), 'education');
   };
@@ -56,10 +101,8 @@ class EducationSection extends React.Component {
     let target = e.target.name;
     let value = e.target.value;
 
-    console.log(`Changing handling here! target ${target}: ${value}`);
-
     this.setState((state, props) => ({
-      [e.target.name]: value,
+      [target]: value,
     }));
   };
 
@@ -67,35 +110,75 @@ class EducationSection extends React.Component {
     return (
       <div className="education-section">
         <h2>Education</h2>
-        <button className="btn btn-add" onClick={this.toggleFormDisplay}>
+        <button
+          className="btn btn-add"
+          onClick={(this.toggleFormDisplay, this.showAddForm)}
+        >
           Add New Education
         </button>
 
         {this.state.showForm && (
           <form>
-            <h4>Add New Education Entry</h4>
+            {this.state.showAddForm && <h4>Add New Education Entry</h4>}
+            {this.state.showEditForm && <h4>Edit Education Entry</h4>}
 
             <label htmlFor="credential">Credential:</label>
-            <input type="text" name="credential" onChange={this.onChange} />
+            <input
+              type="text"
+              name="credential"
+              onChange={this.onChange}
+              value={this.state.credential}
+            />
 
             <label htmlFor="program">Program:</label>
-            <input type="text" name="program" onChange={this.onChange} />
+            <input
+              type="text"
+              name="program"
+              onChange={this.onChange}
+              value={this.state.program}
+            />
 
             <label htmlFor="school">School:</label>
-            <input type="text" name="school" onChange={this.onChange} />
+            <input
+              type="text"
+              name="school"
+              onChange={this.onChange}
+              value={this.state.school}
+            />
 
             <label htmlFor="date">Date:</label>
-            <input type="text" name="date" onChange={this.onChange} />
+            <input
+              type="text"
+              name="date"
+              onChange={this.onChange}
+              value={this.state.date}
+            />
 
             <label htmlFor="description">Description:</label>
-            <input type="text" name="description" onChange={this.onChange} />
+            <input
+              type="text"
+              name="description"
+              onChange={this.onChange}
+              description={this.state.description}
+            />
 
-            <div className="add-form-buttons">
-              <button className="btn btn-add" onClick={this.addNewEntry}>
-                Add
-              </button>
-              <button className="btn btn-cancel">Cancel</button>
-            </div>
+            {this.state.showAddForm && (
+              <div className="add-form-buttons">
+                <button className="btn btn-add" onClick={this.addNewEntry}>
+                  Add
+                </button>
+                <button className="btn btn-cancel">Cancel</button>
+              </div>
+            )}
+
+            {this.state.showEditForm && (
+              <div className="edit-form-buttons">
+                <button className="btn btn-edit" onClick={this.editEntry}>
+                  Edit
+                </button>
+                <button className="btn btn-cancel">Cancel</button>
+              </div>
+            )}
           </form>
         )}
 
@@ -103,7 +186,7 @@ class EducationSection extends React.Component {
           <article>
             {this.props.entries.map((entry, index) => {
               return (
-                <div className="education-entry">
+                <div className="education-entry" key={index}>
                   <div className="education-entry-header">
                     <h3>
                       {entry.credential} - {entry.program}{' '}
@@ -118,6 +201,13 @@ class EducationSection extends React.Component {
                       >
                         X
                       </button>
+                      <button
+                        className="btn btn-edit"
+                        data-id={index}
+                        onClick={this.showEditForm}
+                      >
+                        Edit
+                      </button>
                     </div>
                   </div>
                   <p>
@@ -125,8 +215,8 @@ class EducationSection extends React.Component {
                   </p>
 
                   <ul>
-                    {entry.description.map((detail) => {
-                      return <li>{detail}</li>;
+                    {entry.description.map((detail, index) => {
+                      return <li key={index}>{detail}</li>;
                     })}
                   </ul>
                 </div>

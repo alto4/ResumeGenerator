@@ -25,10 +25,8 @@ class Resume extends React.Component {
     let target = e.target.name;
     let value = e.target.value;
 
-    console.log(`Changing handling here! target ${target}: ${value}`);
-
     this.setState((state, props) => ({
-      [e.target.name]: value,
+      [target]: value,
     }));
   };
 
@@ -48,11 +46,14 @@ class Resume extends React.Component {
   };
 
   editEntry = (index, section, updatedEntry) => {
-    alert(`Editing now in ${section} section.`);
+    let entries = this.state[section];
+    let entry = entries[index];
+    let keys = Object.keys(entry);
 
-    let entries = [...this.state[section]];
+    keys.forEach((key) => {
+      entry[key] = updatedEntry[key];
+    });
 
-    entries[index] = updatedEntry;
     this.setState({ [section]: entries });
   };
 
@@ -62,6 +63,7 @@ class Resume extends React.Component {
         <ResumeHeader onChange={this.onChange} />
         <EducationSection
           addEducation={this.addEntry}
+          editEducation={this.editEntry}
           removeEducation={this.deleteEntry}
           entries={this.state.education}
         />
