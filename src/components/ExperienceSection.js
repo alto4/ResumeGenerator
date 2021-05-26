@@ -50,6 +50,12 @@ class ExperienceSection extends React.Component {
     this.setState({ showAddForm: true, showEditForm: false });
   };
 
+  cancelEntry = (e) => {
+    e.preventDefault();
+
+    this.toggleFormDisplay();
+  };
+
   addNewEntry = (e) => {
     e.preventDefault();
 
@@ -183,7 +189,9 @@ class ExperienceSection extends React.Component {
                 <button className="btn btn-add" onClick={this.addNewEntry}>
                   Add
                 </button>
-                <button className="btn btn-cancel">Cancel</button>
+                <button className="btn btn-cancel" onClick={this.cancelEntry}>
+                  Cancel
+                </button>
               </div>
             )}
 
@@ -192,7 +200,9 @@ class ExperienceSection extends React.Component {
                 <button className="btn btn-edit" onClick={this.editEntry}>
                   Edit
                 </button>
-                <button className="btn btn-cancel">Cancel</button>
+                <button className="btn btn-cancel" onClick={this.cancelEntry}>
+                  Cancel
+                </button>
               </div>
             )}
           </form>
