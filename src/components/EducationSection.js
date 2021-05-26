@@ -48,6 +48,8 @@ class EducationSection extends React.Component {
     console.log(
       'Clicked to remove with index of ' + e.target.getAttribute('data-id')
     );
+
+    this.props.removeEducation(e.target.getAttribute('data-id'), 'education');
   };
 
   onChange = (e) => {

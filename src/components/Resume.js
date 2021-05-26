@@ -38,16 +38,38 @@ class Resume extends React.Component {
     });
   };
 
+  deleteEntry = (index, section) => {
+    alert(`Deleting now from ${section} section!`);
+
+    let entries = [...this.state[section]];
+
+    if (index !== -1) {
+      entries.splice(index, 1);
+      this.setState({ [section]: entries });
+    }
+  };
+
+  editEntry = (index, section, updatedEntry) => {
+    alert(`Editing now in ${section} section.`);
+
+    let entries = [...this.state[section]];
+
+    entries[index] = updatedEntry;
+    this.setState({ [section]: entries });
+  };
+
   render() {
     return (
       <div className="resume-container">
         <ResumeHeader onChange={this.onChange} />
         <EducationSection
           addEducation={this.addEntry}
+          removeEducation={this.deleteEntry}
           entries={this.state.education}
         />
         <ExperienceSection
           addExperience={this.addEntry}
+          removeExperience={this.deleteEntry}
           entries={this.state.experience}
         />
       </div>

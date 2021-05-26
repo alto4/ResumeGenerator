@@ -42,11 +42,14 @@ class ExperienceSection extends React.Component {
 
     this.setState({ showForm: !this.state.showForm });
   };
+
   removeEntry = (e) => {
     e.preventDefault();
     console.log(
       'Clicked to remove with index of ' + e.target.getAttribute('data-id')
     );
+
+    this.props.removeExperience(e.target.getAttribute('data-id'), 'experience');
   };
 
   onChange = (e) => {
