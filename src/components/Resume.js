@@ -39,8 +39,6 @@ class Resume extends React.Component {
   };
 
   deleteEntry = (index, section) => {
-    alert(`Deleting now from ${section} section!`);
-
     let entries = [...this.state[section]];
 
     if (index !== -1) {

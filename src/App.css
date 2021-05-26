@@ -16,7 +16,7 @@ header {
 
 .resume-container {
   width: 800px; 
-  height: 1120px;
+  min-height: 1120px;
   margin: auto;
   border: 2px solid #222;
   border-radius: 10px;

@@ -17,18 +17,18 @@ class ExperienceSection extends React.Component {
   addNewEntry = (e) => {
     e.preventDefault();
 
-    let credential = this.state.credential;
-    let program = this.state.program;
-    let school = this.state.school;
+    let position = this.state.position;
+    let company = this.state.company;
+    let location = this.state.location;
     let date = this.state.date;
     let description = this.state.description;
 
     alert('description value is ' + description);
     this.props.addExperience(
       {
-        credential,
-        program,
-        school,
+        position,
+        company,
+        location,
         date,
         description: [
           description,
@@ -75,14 +75,14 @@ class ExperienceSection extends React.Component {
           <form>
             <h4>Add New Experience Entry</h4>
 
-            <label htmlFor="credential">Credential:</label>
-            <input type="text" name="credential" onChange={this.onChange} />
+            <label htmlFor="position">Position:</label>
+            <input type="text" name="position" onChange={this.onChange} />
 
-            <label htmlFor="program">Program:</label>
-            <input type="text" name="program" onChange={this.onChange} />
+            <label htmlFor="company">Company:</label>
+            <input type="text" name="company" onChange={this.onChange} />
 
-            <label htmlFor="school">School:</label>
-            <input type="text" name="school" onChange={this.onChange} />
+            <label htmlFor="location">Location:</label>
+            <input type="text" name="location" onChange={this.onChange} />
 
             <label htmlFor="date">Date:</label>
             <input type="text" name="date" onChange={this.onChange} />
@@ -105,9 +105,7 @@ class ExperienceSection extends React.Component {
               return (
                 <div className="experience-entry">
                   <div className="experience-entry-header">
-                    <h3>
-                      {entry.credential} - {entry.program}{' '}
-                    </h3>
+                    <h3>{entry.position}</h3>
 
                     <div>
                       <span>{entry.date} </span>
@@ -121,12 +119,14 @@ class ExperienceSection extends React.Component {
                     </div>
                   </div>
                   <p>
-                    <strong>{entry.school}</strong>
+                    <strong>
+                      {entry.company} - {entry.location}
+                    </strong>
                   </p>
 
                   <ul>
-                    {entry.description.map((detail) => {
-                      return <li>{detail}</li>;
+                    {entry.description.map((detail, index) => {
+                      return <li key={index}>{detail}</li>;
                     })}
                   </ul>
                 </div>
