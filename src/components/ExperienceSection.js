@@ -4,6 +4,7 @@ class ExperienceSection extends React.Component {
   constructor(props) {
     super(props);
 
+    // Store state of form display and form fields
     this.state = {
       showForm: false,
       showAddForm: false,
@@ -17,45 +18,56 @@ class ExperienceSection extends React.Component {
     };
   }
 
+  // Show/hide education entry form
   toggleFormDisplay = () => {
     this.setState({ showForm: !this.state.showForm });
   };
 
+  // Display edit form
   showEditForm = (e) => {
     e.preventDefault();
 
+    // Ensure that clicking edit button always results in an open form
     if (this.state.showForm === false) {
       this.toggleFormDisplay();
     }
 
+    // Update state to current form status and capture id of entry being targetted
     this.setState({
       showEditForm: true,
       showAddForm: false,
       entryEditing: e.target.getAttribute('data-id'),
     });
 
+    // Populate edit form fields with data for corresponding entry
     let { position, company, location, date, description } =
       this.props.entries[e.target.getAttribute('data-id')];
 
     this.setState({ position, company, location, date, description });
   };
 
+  // Display add form after clearing potentially populated fields
   showAddForm = (e) => {
     this.clearFormFields();
     e.preventDefault();
+
+    // Ensure that clicking add button always results in an open form
     if (this.state.showForm === false) {
       this.toggleFormDisplay();
     }
 
+    // Only ever allow a single input form to be displayed
     this.setState({ showAddForm: true, showEditForm: false });
   };
 
+  // Cancel add or edit form entry in progress
   cancelEntry = (e) => {
     e.preventDefault();
 
     this.toggleFormDisplay();
   };
 
+  // Submit new education entry based on current state of form fields
   addNewEntry = (e) => {
     e.preventDefault();
 
@@ -65,8 +77,7 @@ class ExperienceSection extends React.Component {
     let date = this.state.date;
     let description = this.state.description;
 
-    console.log('adding to new experience' + position + company);
-    alert('description value is ' + description);
+    // Pass new entry up to Resume component
     this.props.addExperience(
       {
         position,
@@ -83,11 +94,13 @@ class ExperienceSection extends React.Component {
       'experience'
     );
 
+    // Close form and clear all fields
     this.setState({ showAddForm: !this.state.showForm });
     this.toggleFormDisplay();
     this.clearFormFields();
   };
 
+  // Overwrite existing experience entry and pass up to Resume component
   editEntry = (e) => {
     e.preventDefault();
 
@@ -103,12 +116,14 @@ class ExperienceSection extends React.Component {
     this.clearFormFields();
   };
 
+  // Remove targetted experience entry from Resume component state array
   removeEntry = (e) => {
     e.preventDefault();
 
     this.props.removeExperience(e.target.getAttribute('data-id'), 'experience');
   };
 
+  // Clear potentially populated inputs to default state
   clearFormFields = () => {
     this.setState({
       position: '',
@@ -119,6 +134,7 @@ class ExperienceSection extends React.Component {
     });
   };
 
+  // Handle change made to value of inputs
   onChange = (e) => {
     let target = e.target.name;
     let value = e.target.value;

@@ -4,6 +4,7 @@ class EducationSection extends React.Component {
   constructor(props) {
     super(props);
 
+    // Store state of form display and form fields
     this.state = {
       showForm: false,
       showAddForm: false,
@@ -17,45 +18,56 @@ class EducationSection extends React.Component {
     };
   }
 
+  // Show/hide education entry form
   toggleFormDisplay = () => {
     this.setState({ showForm: !this.state.showForm });
   };
 
+  // Display add form after clearing potentially populated fields
   showAddForm = (e) => {
     this.clearFormFields();
     e.preventDefault();
+
+    // Ensure that clicking add button always results in an open form
     if (this.state.showForm === false) {
       this.toggleFormDisplay();
     }
 
+    // Only ever allow a single input form to be displayed
     this.setState({ showAddForm: true, showEditForm: false });
   };
 
+  // Display edit form
   showEditForm = (e) => {
     e.preventDefault();
 
+    // Ensure that clicking edit button always results in an open form
     if (this.state.showForm === false) {
       this.toggleFormDisplay();
     }
 
+    // Update state to current form status and capture id of entry being targetted
     this.setState({
       showEditForm: true,
       showAddForm: false,
       entryEditing: e.target.getAttribute('data-id'),
     });
 
+    // Populate edit form fields with data for corresponding entry
     let { credential, program, school, date, description } =
       this.props.entries[e.target.getAttribute('data-id')];
 
     this.setState({ credential, program, school, date, description });
   };
 
+  // Cancel add or edit form entry in progress
   cancelEntry = (e) => {
     e.preventDefault();
 
     this.toggleFormDisplay();
   };
 
+  // Submit new education entry based on current state of form fields
   addNewEntry = (e) => {
     e.preventDefault();
 
@@ -65,6 +77,7 @@ class EducationSection extends React.Component {
     let date = this.state.date;
     let description = this.state.description;
 
+    // Pass new entry up to Resume component
     this.props.addEducation(
       {
         credential,
@@ -76,11 +89,13 @@ class EducationSection extends React.Component {
       'education'
     );
 
+    // Close form and clear all fields
     this.setState({ showAddForm: !this.state.showAddForm });
     this.toggleFormDisplay();
     this.clearFormFields();
   };
 
+  // Overwrite existing education entry and pass up to Resume component
   editEntry = (e) => {
     e.preventDefault();
 
@@ -96,12 +111,14 @@ class EducationSection extends React.Component {
     this.clearFormFields();
   };
 
+  // Remove targetted education entry from Resume component state array
   removeEntry = (e) => {
     e.preventDefault();
 
     this.props.removeEducation(e.target.getAttribute('data-id'), 'education');
   };
 
+  // Clear potentially populated inputs to default state
   clearFormFields = () => {
     this.setState({
       credential: '',
@@ -112,6 +129,7 @@ class EducationSection extends React.Component {
     });
   };
 
+  // Handle change made to value of inputs
   onChange = (e) => {
     let target = e.target.name;
     let value = e.target.value;
