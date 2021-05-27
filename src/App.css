@@ -32,6 +32,11 @@ header {
 
 .resume-container h2 {
   text-transform: uppercase;
+  font-size: 1.4rem;
+}
+
+.resume-container h3 {
+  margin-top: 1rem;
   font-size: 1.3rem;
 }
 
@@ -139,6 +144,12 @@ form .btn-cancel {
   margin-right: 10px;
 }
 
+.btn-edit,
+.btn-delete {
+  padding: 7px;
+  border-radius: .3em;
+}
+
 .education-entry-header,
 .experience-entry-header {
   display: flex;
@@ -155,4 +166,19 @@ form .btn-cancel {
 .education-entry-header div button,
 .experience-entry-header div button {
   margin: 0 0 0 10px;
+}
+
+.education-entry-header span,
+.experience-entry-header span {
+  font-size: 1.1rem;
+}
+
+.education-entry p,
+.experience-entry p {
+  margin-bottom: .3rem;
+  font-size: 1.2rem;
+}
+
+ul {
+  list-style: inside square; 
 }

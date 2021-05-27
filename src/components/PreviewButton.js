@@ -20,7 +20,7 @@ class PreviewButton extends Component {
     let buttons = document.querySelectorAll('button');
     let previewButton = document.querySelector('.btn-preview');
     let forms = document.querySelectorAll('form');
-    let inputs = document.querySelectorAll('input');
+    let inputs = document.querySelectorAll('.resume-header input');
     let placeholders = [];
 
     // Hide or show buttons depending on user mode

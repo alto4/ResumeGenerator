@@ -84,12 +84,7 @@ class ExperienceSection extends React.Component {
         company,
         location,
         date,
-        description: [
-          description,
-          'Teamwork skills',
-          'Critical analysis skills',
-          'Problem-solving skills',
-        ],
+        description: description.split(','),
       },
       'experience'
     );
@@ -109,7 +104,7 @@ class ExperienceSection extends React.Component {
       company: this.state.company,
       location: this.state.location,
       date: this.state.date,
-      description: ['1', '2', '3'],
+      description: this.state.description.split(','),
     });
 
     this.toggleFormDisplay();
@@ -238,14 +233,14 @@ class ExperienceSection extends React.Component {
                         data-id={index}
                         onClick={this.removeEntry}
                       >
-                        X
+                        <i className="fas fa-trash"></i>
                       </button>
                       <button
                         className="btn btn-edit"
                         data-id={index}
                         onClick={this.showEditForm}
                       >
-                        Edit
+                        <i className="fas fa-edit"></i>
                       </button>
                     </div>
                   </div>

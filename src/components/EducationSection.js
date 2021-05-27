@@ -236,14 +236,14 @@ class EducationSection extends React.Component {
                         data-id={index}
                         onClick={this.removeEntry}
                       >
-                        X
+                        <i className="fas fa-trash"></i>
                       </button>
                       <button
                         className="btn btn-edit"
                         data-id={index}
                         onClick={this.showEditForm}
                       >
-                        Edit
+                        <i className="fas fa-edit"></i>
                       </button>
                     </div>
                   </div>
