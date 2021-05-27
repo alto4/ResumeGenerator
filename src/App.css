@@ -188,6 +188,7 @@ form .btn-cancel {
 }
 
 /* Keep same background colour when auto-fill is used */
-input:-webkit-autofill {
+.resume-header input:-webkit-autofill {
+  box-shadow: 0 0 0 1000px white inset !important;
   -webkit-box-shadow: 0 0 0 1000px white inset !important;
 }
