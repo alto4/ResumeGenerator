@@ -41,7 +41,7 @@ class ExperienceSection extends React.Component {
 
     // Populate edit form fields with data for corresponding entry
     let { position, company, location, date, description } =
-      this.props.entries[e.target.getAttribute('data-id')];
+      this.props.entries[e.currentTarget.getAttribute('data-id')];
 
     this.setState({ position, company, location, date, description });
   };

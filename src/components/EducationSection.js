@@ -50,12 +50,12 @@ class EducationSection extends React.Component {
     this.setState({
       showEditForm: true,
       showAddForm: false,
-      entryEditing: e.target.getAttribute('data-id'),
+      entryEditing: e.currentTarget.getAttribute('data-id'),
     });
 
     // Populate edit form fields with data for corresponding entry
     let { credential, program, school, date, description } =
-      this.props.entries[e.target.getAttribute('data-id')];
+      this.props.entries[e.currentTarget.getAttribute('data-id')];
 
     this.setState({ credential, program, school, date, description });
   };

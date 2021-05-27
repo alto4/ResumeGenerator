@@ -40,8 +40,8 @@ input {
   width: 100%;
 }
 
-.btn-edit,
-.btn-delete {
+article .btn-edit,
+article .btn-delete {
   padding: 7px;
   border-radius: .3em;
 }
