@@ -187,3 +187,7 @@ form .btn-cancel {
   font-size: 1.2rem;
 }
 
+/* Keep same background colour when auto-fill is used */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}

@@ -14,7 +14,7 @@ class EducationSection extends React.Component {
       school: '',
       date: '',
       program: '',
-      description: [''],
+      description: [],
     };
   }
 
