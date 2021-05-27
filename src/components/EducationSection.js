@@ -13,7 +13,7 @@ class EducationSection extends React.Component {
       school: '',
       date: '',
       program: '',
-      description: [],
+      description: [''],
     };
   }
 
@@ -71,12 +71,7 @@ class EducationSection extends React.Component {
         program,
         school,
         date,
-        description: [
-          description,
-          'Teamwork skills',
-          'Critical analysis skills',
-          'Problem-solving skills',
-        ],
+        description: description.split(','),
       },
       'education'
     );
@@ -94,7 +89,7 @@ class EducationSection extends React.Component {
       date: this.state.date,
       school: this.state.school,
       program: this.state.program,
-      description: ['1', '2', '3'],
+      description: this.state.description.split(','),
     });
 
     this.toggleFormDisplay();

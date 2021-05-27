@@ -6,6 +6,7 @@ class PreviewButton extends Component {
 
     this.state = {
       preview: false,
+      placeholders: [],
     };
   }
 
@@ -16,6 +17,8 @@ class PreviewButton extends Component {
     let buttons = document.querySelectorAll('button');
     let previewButton = document.querySelector('.btn-preview');
     let forms = document.querySelectorAll('form');
+    let inputs = document.querySelectorAll('input');
+    let placeholders = [];
 
     buttons.forEach((button) => {
       if (button.style.display !== 'none') {
@@ -37,6 +40,29 @@ class PreviewButton extends Component {
     });
 
     previewButton.style.display = 'block';
+
+    this.restorePlaceholderText(placeholders, inputs);
+  };
+
+  restorePlaceholderText = (placeholders, inputs) => {
+    if (!this.state.preview) {
+      inputs.forEach((input) => {
+        placeholders.push(input.getAttribute('placeholder'));
+
+        this.setState({
+          placeholders,
+        });
+
+        console.log(
+          'placeholder array of text updated to ' + placeholders.join(',')
+        );
+        input.setAttribute('placeholder', '');
+      });
+    } else {
+      inputs.forEach((input, index) => {
+        input.setAttribute('placeholder', this.state.placeholders[index]);
+      });
+    }
   };
 
   render() {
