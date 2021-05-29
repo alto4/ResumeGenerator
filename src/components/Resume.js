@@ -31,9 +31,21 @@ const Resume = () => {
 
   // Add a new entry to corresponding resume section by adding to array of related entries
   const addEntry = (entry, section) => {
+    console.log(entries[section]);
+
+    let currentEntries = [];
+
+    if (entries[section]) {
+      currentEntries = entries[section];
+    }
+
+    currentEntries.push(entry);
+
     setEntries({
-      [section]: [...entries[section], entry],
+      [section]: currentEntries,
     });
+
+    // Experience entries
   };
 
   // Delete target entry from state
@@ -70,12 +82,12 @@ const Resume = () => {
         removeEducation={deleteEntry}
         entries={entries.education}
       />
-      {/* <ExperienceSection
+      <ExperienceSection
         addExperience={addEntry}
         editExperience={editEntry}
         removeExperience={deleteEntry}
         entries={entries.experience}
-      /> */}
+      />
     </div>
   );
 };

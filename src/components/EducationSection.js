@@ -15,6 +15,7 @@ const EducationSection = (props) => {
   // Show/hide education entry form
   const toggleFormDisplay = () => {
     setShowForm(!showForm);
+    console.log(props);
   };
 
   // Clear potentially populated inputs to default state
@@ -90,7 +91,7 @@ const EducationSection = (props) => {
     );
 
     // Close form and clear all fields
-    setDisplayAddForm(!showAddForm);
+    setDisplayAddForm(!displayAddForm);
     toggleFormDisplay();
     clearFormFields();
   };
@@ -209,44 +210,45 @@ const EducationSection = (props) => {
 
       <div className="education-details-container">
         <article>
-          {props.entries.map((entry, index) => {
-            return (
-              <div className="education-entry" key={index}>
-                <div className="education-entry-header">
-                  <h3>
-                    {entry.credential} - {entry.program}
-                  </h3>
+          {props.entries &&
+            props.entries.map((entry, index) => {
+              return (
+                <div className="education-entry" key={index}>
+                  <div className="education-entry-header">
+                    <h3>
+                      {entry.credential} - {entry.program}
+                    </h3>
 
-                  <div>
-                    <span>{entry.date} </span>
-                    <button
-                      className="btn btn-delete"
-                      data-id={index}
-                      onClick={removeEntry}
-                    >
-                      <i className="fas fa-trash"></i>
-                    </button>
-                    <button
-                      className="btn btn-edit"
-                      data-id={index}
-                      onClick={showEditForm}
-                    >
-                      <i className="fas fa-edit"></i>
-                    </button>
+                    <div>
+                      <span>{entry.date} </span>
+                      <button
+                        className="btn btn-delete"
+                        data-id={index}
+                        onClick={removeEntry}
+                      >
+                        <i className="fas fa-trash"></i>
+                      </button>
+                      <button
+                        className="btn btn-edit"
+                        data-id={index}
+                        onClick={showEditForm}
+                      >
+                        <i className="fas fa-edit"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <p>
-                  <strong>{entry.school}</strong>
-                </p>
+                  <p>
+                    <strong>{entry.school}</strong>
+                  </p>
 
-                <ul>
-                  {entry.description.map((detail, index) => {
-                    return <li key={index}>{detail}</li>;
-                  })}
-                </ul>
-              </div>
-            );
-          })}
+                  <ul>
+                    {entry.description.map((detail, index) => {
+                      return <li key={index}>{detail}</li>;
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
         </article>
       </div>
     </div>

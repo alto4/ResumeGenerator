@@ -1,84 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class ExperienceSection extends React.Component {
-  constructor(props) {
-    super(props);
-
-    // Store state of form display and form fields
-    this.state = {
-      showForm: false,
-      showAddForm: false,
-      showEditForm: false,
-      entryEditing: null,
-      position: '',
-      company: '',
-      location: '',
-      date: '',
-      description: [],
-    };
-  }
+const ExperienceSection = (props) => {
+  // Store state of form display and form fields
+  const [showForm, setShowForm] = useState(false);
+  const [displayAddForm, setDisplayAddForm] = useState(false);
+  const [displayEditForm, setDisplayEditForm] = useState(false);
+  const [entryEditing, setEntryEditing] = useState(null);
+  const [position, setPosition] = useState('');
+  const [company, setCompany] = useState('');
+  const [location, setLocation] = useState('');
+  const [date, setDate] = useState('');
+  const [description, setDescription] = useState([]);
 
   // Show/hide education entry form
-  toggleFormDisplay = () => {
-    this.setState({ showForm: !this.state.showForm });
+  const toggleFormDisplay = () => {
+    setShowForm(!showForm);
   };
 
   // Display edit form
-  showEditForm = (e) => {
+  const showEditForm = (e) => {
     e.preventDefault();
 
     // Ensure that clicking edit button always results in an open form
-    if (this.state.showForm === false) {
-      this.toggleFormDisplay();
+    if (showForm === false) {
+      toggleFormDisplay();
     }
 
     // Update state to current form status and capture id of entry being targetted
-    this.setState({
-      showEditForm: true,
-      showAddForm: false,
-      entryEditing: e.target.getAttribute('data-id'),
-    });
+    setDisplayEditForm(true);
+    setDisplayAddForm(false);
+    setEntryEditing(e.target.getAttribute('data-id'));
 
     // Populate edit form fields with data for corresponding entry
     let { position, company, location, date, description } =
-      this.props.entries[e.currentTarget.getAttribute('data-id')];
+      props.entries[e.currentTarget.getAttribute('data-id')];
 
-    this.setState({ position, company, location, date, description });
+    setPosition(position);
+    setCompany(company);
+    setLocation(location);
+    setDate(date);
+    setDescription(description);
   };
 
   // Display add form after clearing potentially populated fields
-  showAddForm = (e) => {
-    this.clearFormFields();
+  const showAddForm = (e) => {
+    clearFormFields();
     e.preventDefault();
 
     // Ensure that clicking add button always results in an open form
-    if (this.state.showForm === false) {
-      this.toggleFormDisplay();
+    if (showForm === false) {
+      toggleFormDisplay();
     }
 
     // Only ever allow a single input form to be displayed
-    this.setState({ showAddForm: true, showEditForm: false });
+    setDisplayAddForm(true);
+    setDisplayEditForm(false);
   };
 
   // Cancel add or edit form entry in progress
-  cancelEntry = (e) => {
+  const cancelEntry = (e) => {
     e.preventDefault();
 
-    this.toggleFormDisplay();
+    toggleFormDisplay();
   };
 
   // Submit new education entry based on current state of form fields
-  addNewEntry = (e) => {
+  const addNewEntry = (e) => {
     e.preventDefault();
 
-    let position = this.state.position;
-    let company = this.state.company;
-    let location = this.state.location;
-    let date = this.state.date;
-    let description = this.state.description;
-
+    alert('HERE');
     // Pass new entry up to Resume component
-    this.props.addExperience(
+    props.addExperience(
       {
         position,
         company,
@@ -90,138 +82,136 @@ class ExperienceSection extends React.Component {
     );
 
     // Close form and clear all fields
-    this.setState({ showAddForm: !this.state.showForm });
-    this.toggleFormDisplay();
-    this.clearFormFields();
+    setDisplayAddForm(!displayAddForm);
+    toggleFormDisplay();
+    clearFormFields();
   };
 
   // Overwrite existing experience entry and pass up to Resume component
-  editEntry = (e) => {
+  const editEntry = (e) => {
     e.preventDefault();
 
-    this.props.editExperience(this.state.entryEditing, 'experience', {
-      position: this.state.position,
-      company: this.state.company,
-      location: this.state.location,
-      date: this.state.date,
-      description: this.state.description.split(','),
+    props.editExperience(entryEditing, 'experience', {
+      position,
+      company,
+      location,
+      date,
+      description: description.split(','),
     });
 
-    this.toggleFormDisplay();
-    this.clearFormFields();
+    toggleFormDisplay();
+    clearFormFields();
   };
 
   // Remove targetted experience entry from Resume component state array
-  removeEntry = (e) => {
+  const removeEntry = (e) => {
     e.preventDefault();
 
-    this.props.removeExperience(e.target.getAttribute('data-id'), 'experience');
+    props.removeExperience(e.target.getAttribute('data-id'), 'experience');
   };
 
   // Clear potentially populated inputs to default state
-  clearFormFields = () => {
-    this.setState({
-      position: '',
-      company: '',
-      location: '',
-      date: '',
-      description: '',
-    });
+  const clearFormFields = () => {
+    setPosition('');
+    setCompany('');
+    setLocation('');
+    setDate('');
+    setDescription('');
   };
 
-  // Handle change made to value of inputs
-  onChange = (e) => {
-    let target = e.target.name;
-    let value = e.target.value;
+  return (
+    <div className="experience-section">
+      <h2>Experience</h2>
+      <button
+        className="btn btn-add"
+        onClick={(toggleFormDisplay, showAddForm)}
+      >
+        Add New Experience
+      </button>
 
-    this.setState((state, props) => ({
-      [target]: value,
-    }));
-  };
+      {showForm && (
+        <form>
+          {displayAddForm && <h4>Add New Experience Entry</h4>}
+          {displayEditForm && <h4>Edit Experience Entry</h4>}
 
-  render() {
-    return (
-      <div className="experience-section">
-        <h2>Experience</h2>
-        <button
-          className="btn btn-add"
-          onClick={(this.toggleFormDisplay, this.showAddForm)}
-        >
-          Add New Experience
-        </button>
+          <label htmlFor="position">Position:</label>
+          <input
+            type="text"
+            name="position"
+            onChange={(e) => {
+              setPosition(e.target.value);
+            }}
+            value={position}
+          />
 
-        {this.state.showForm && (
-          <form>
-            {this.state.showAddForm && <h4>Add New Experience Entry</h4>}
-            {this.state.showEditForm && <h4>Edit Experience Entry</h4>}
+          <label htmlFor="company">Company:</label>
+          <input
+            type="text"
+            name="company"
+            onChange={(e) => {
+              setCompany(e.target.value);
+            }}
+            value={company}
+          />
 
-            <label htmlFor="position">Position:</label>
-            <input
-              type="text"
-              name="position"
-              onChange={this.onChange}
-              value={this.state.position}
-            />
+          <label htmlFor="location">Location:</label>
+          <input
+            type="text"
+            name="location"
+            onChange={(e) => {
+              setLocation(e.target.value);
+            }}
+            value={location}
+          />
 
-            <label htmlFor="company">Company:</label>
-            <input
-              type="text"
-              name="company"
-              onChange={this.onChange}
-              value={this.state.company}
-            />
+          <label htmlFor="date">Date:</label>
+          <input
+            type="text"
+            name="date"
+            onChange={(e) => {
+              setDate(e.target.value);
+            }}
+            value={date}
+          />
 
-            <label htmlFor="location">Location:</label>
-            <input
-              type="text"
-              name="location"
-              onChange={this.onChange}
-              value={this.state.location}
-            />
+          <label htmlFor="description">Description:</label>
+          <input
+            type="text"
+            name="description"
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+            value={description}
+          />
 
-            <label htmlFor="date">Date:</label>
-            <input
-              type="text"
-              name="date"
-              onChange={this.onChange}
-              value={this.state.date}
-            />
+          {displayAddForm && (
+            <div className="add-form-buttons">
+              <button className="btn btn-add" onClick={addNewEntry}>
+                Add
+              </button>
+              <button className="btn btn-cancel" onClick={cancelEntry}>
+                Cancel
+              </button>
+            </div>
+          )}
 
-            <label htmlFor="description">Description:</label>
-            <input
-              type="text"
-              name="description"
-              onChange={this.onChange}
-              value={this.state.description}
-            />
+          {displayEditForm && (
+            <div className="edit-form-buttons">
+              <button className="btn btn-edit" onClick={editEntry}>
+                Edit
+              </button>
+              <button className="btn btn-cancel" onClick={cancelEntry}>
+                Cancel
+              </button>
+            </div>
+          )}
+        </form>
+      )}
 
-            {this.state.showAddForm && (
-              <div className="add-form-buttons">
-                <button className="btn btn-add" onClick={this.addNewEntry}>
-                  Add
-                </button>
-                <button className="btn btn-cancel" onClick={this.cancelEntry}>
-                  Cancel
-                </button>
-              </div>
-            )}
-
-            {this.state.showEditForm && (
-              <div className="edit-form-buttons">
-                <button className="btn btn-edit" onClick={this.editEntry}>
-                  Edit
-                </button>
-                <button className="btn btn-cancel" onClick={this.cancelEntry}>
-                  Cancel
-                </button>
-              </div>
-            )}
-          </form>
-        )}
-
-        <div className="experience-details-container">
-          <article>
-            {this.props.entries.map((entry, index) => {
+      <div className="experience-details-container">
+        <article>
+          {props.entries &&
+            props.entries.map((entry, index) => {
               return (
                 <div className="experience-entry" key={index}>
                   <div className="experience-entry-header">
@@ -231,14 +221,14 @@ class ExperienceSection extends React.Component {
                       <button
                         className="btn btn-delete"
                         data-id={index}
-                        onClick={this.removeEntry}
+                        onClick={removeEntry}
                       >
                         <i className="fas fa-trash"></i>
                       </button>
                       <button
                         className="btn btn-edit"
                         data-id={index}
-                        onClick={this.showEditForm}
+                        onClick={showEditForm}
                       >
                         <i className="fas fa-edit"></i>
                       </button>
@@ -258,11 +248,10 @@ class ExperienceSection extends React.Component {
                 </div>
               );
             })}
-          </article>
-        </div>
+        </article>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default ExperienceSection;
