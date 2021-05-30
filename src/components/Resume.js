@@ -81,14 +81,11 @@ const Resume = () => {
       ? (updatedEntries = [...education])
       : (updatedEntries = [...experience]);
 
-    let deleted = updatedEntries.splice(index, 1);
+    updatedEntries.splice(index, 1);
 
     section === 'education'
       ? setEducation(updatedEntries)
       : setExperience(updatedEntries);
-
-    console.log(index + ' has been removed?');
-    console.log('Updated now array has ' + updatedEntries.length + ' entries.');
   };
 
   // Update an existing entry

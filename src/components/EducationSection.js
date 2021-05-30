@@ -118,7 +118,6 @@ const EducationSection = (props) => {
     props.removeEducation(e.currentTarget.getAttribute('data-id'), 'education');
   };
 
-  console.log(props.entries);
   return (
     <div className="education-section">
       <h2>Education</h2>

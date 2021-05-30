@@ -29,7 +29,7 @@ const ExperienceSection = (props) => {
     // Update state to current form status and capture id of entry being targetted
     setDisplayEditForm(true);
     setDisplayAddForm(false);
-    setEntryEditing(e.target.getAttribute('data-id'));
+    setEntryEditing(e.currentTarget.getAttribute('data-id'));
 
     // Populate edit form fields with data for corresponding entry
     let { position, company, location, date, description } =
