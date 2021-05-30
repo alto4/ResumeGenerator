@@ -15,7 +15,6 @@ const EducationSection = (props) => {
   // Show/hide education entry form
   const toggleFormDisplay = () => {
     setShowForm(!showForm);
-    console.log(props);
   };
 
   // Clear potentially populated inputs to default state
@@ -64,7 +63,7 @@ const EducationSection = (props) => {
     setProgram(program);
     setSchool(school);
     setDate(date);
-    setDescription(description);
+    setDescription(description.join(','));
   };
 
   // Cancel add or edit form entry in progress
@@ -105,7 +104,7 @@ const EducationSection = (props) => {
       date,
       school,
       program,
-      description: description.split(','),
+      description: description.indexOf(',') > -1 ? description.split(',') : [],
     });
 
     toggleFormDisplay();
@@ -116,9 +115,10 @@ const EducationSection = (props) => {
   const removeEntry = (e) => {
     e.preventDefault();
 
-    props.removeEducation(e.target.getAttribute('data-id'), 'education');
+    props.removeEducation(e.currentTarget.getAttribute('data-id'), 'education');
   };
 
+  console.log(props.entries);
   return (
     <div className="education-section">
       <h2>Education</h2>
@@ -181,7 +181,7 @@ const EducationSection = (props) => {
             onChange={(e) => {
               setDescription(e.target.value);
             }}
-            description={description}
+            value={description}
           />
 
           {displayAddForm && (
@@ -210,7 +210,7 @@ const EducationSection = (props) => {
 
       <div className="education-details-container">
         <article>
-          {props.entries &&
+          {props.entries.length > 0 &&
             props.entries.map((entry, index) => {
               return (
                 <div className="education-entry" key={index}>
@@ -242,9 +242,10 @@ const EducationSection = (props) => {
                   </p>
 
                   <ul>
-                    {entry.description.map((detail, index) => {
-                      return <li key={index}>{detail}</li>;
-                    })}
+                    {entry.description.length > 0 &&
+                      entry.description.map((detail, index) => {
+                        return <li key={index}>{detail}</li>;
+                      })}
                   </ul>
                 </div>
               );

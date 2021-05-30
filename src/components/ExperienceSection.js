@@ -68,7 +68,6 @@ const ExperienceSection = (props) => {
   const addNewEntry = (e) => {
     e.preventDefault();
 
-    alert('HERE');
     // Pass new entry up to Resume component
     props.addExperience(
       {
@@ -96,7 +95,7 @@ const ExperienceSection = (props) => {
       company,
       location,
       date,
-      description: description.split(','),
+      description: description.indexOf(',') > -1 ? description.split(',') : '',
     });
 
     toggleFormDisplay();
@@ -107,7 +106,10 @@ const ExperienceSection = (props) => {
   const removeEntry = (e) => {
     e.preventDefault();
 
-    props.removeExperience(e.target.getAttribute('data-id'), 'experience');
+    props.removeExperience(
+      e.currentTarget.getAttribute('data-id'),
+      'experience'
+    );
   };
 
   // Clear potentially populated inputs to default state
@@ -241,9 +243,10 @@ const ExperienceSection = (props) => {
                   </p>
 
                   <ul>
-                    {entry.description.map((detail, index) => {
-                      return <li key={index}>{detail}</li>;
-                    })}
+                    {entry.description.length > 0 &&
+                      entry.description.map((detail, index) => {
+                        return <li key={index}>{detail}</li>;
+                      })}
                   </ul>
                 </div>
               );
